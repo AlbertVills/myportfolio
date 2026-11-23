@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Albert S. Villasor | Front-End Developer & UI/UX Designer</title>
+  
+  <meta name="description" content="Portfolio of Albert S. Villasor — Front-End Developer and UI/UX Designer based in Cebu City, Philippines. Showcasing web development, mobile Flutter apps, and Figma UI/UX prototypes." />
+  <meta name="author" content="Albert S. Villasor" />
+  <meta name="keywords" content="Albert Villasor, Front-End Developer, UI/UX Designer, Cebu City, Flutter, Figma, Web Development, Portfolio, OJT" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Albert S. Villasor | Front-End Developer & UI/UX Designer" />
+  <meta property="og:description" content="Explore modern front-end web applications, mobile Flutter solutions, and high-fidelity Figma UI/UX design prototypes." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="images/profile-hero.jpg" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <!-- Theme Initialization (Prevents theme flash) -->
+  <script>
+    (function () {
+      const theme = localStorage.getItem("av_theme") || "dark";
+      if (theme === "light") {
+        document.documentElement.classList.remove("dark");
+        document.documentElement.classList.add("light");
+      } else {
+        document.documentElement.classList.remove("light");
+        document.documentElement.classList.add("dark");
+      }
+    })();
+  </script>
+
+  <!-- Resilient Image Fallback: Guarantees image loading across images/ and assets/images/ paths on Vercel / GitHub -->
+  <script>
+    (function () {
+      window.__imgFallbackRegistered = true;
+      window.addEventListener("error", function (e) {
+        if (e.target && e.target.tagName === "IMG") {
+          var img = e.target;
+          var step = parseInt(img.dataset.fallbackStep || "0", 10);
+          var src = img.getAttribute("src") || "";
+          var candidates = [];
+          
+          if (src.indexOf("assets/images/") !== -1) {
+            candidates.push(src.replace("assets/images/", "images/"));
+            candidates.push("./" + src.replace("assets/images/", "images/"));
+          } else if (src.indexOf("assets/") !== -1) {
+            candidates.push(src.replace("assets/", ""));
+          } else if (src.indexOf("images/") !== -1) {
+            candidates.push("./" + src.replace(/^\.\//, ""));
+          }
+
+          if (step < candidates.length) {
+            img.dataset.fallbackStep = String(step + 1);
+            img.src = candidates[step];
+          }
+        }
+      }, true);
+    })();
+  </script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            primary: ['Plus Jakarta Sans', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            primary: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              200: '#ddd6fe',
+              300: '#c4b5fd',
+              400: '#a78bfa',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+              800: '#5b21b6',
+              900: '#4c1d95',
+            },
+            accent: {
+              cyan: '#06b6d4',
+              emerald: '#10b981',
+              amber: '#f59e0b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-[#0b0f19] dark:text-slate-100 antialiased selection:bg-purple-500 selection:text-white relative min-h-screen transition-colors duration-300">
+
+  <!-- Interactive Ambient Canvas -->
+  <canvas id="particles-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- Ambient Glow Gradients -->
+  <div class="gradient-blob w-[550px] h-[550px] bg-purple-600/25 top-[-100px] left-[-150px]"></div>
+  <div class="gradient-blob w-[600px] h-[600px] bg-cyan-600/20 top-[35%] right-[-150px]"></div>
+  <div class="gradient-blob w-[500px] h-[500px] bg-emerald-600/15 bottom-[10%] left-[10%]"></div>
+
+  <!-- ==========================================================================
+       HERO CANVAS SECTION (Folioblox High-Fashion Editorial Style)
+       ========================================================================== -->
+  <section id="home" class="relative z-20 px-0">
+    <div class="hero-canvas relative w-full max-w-none min-h-[720px] lg:min-h-[820px] xl:min-h-[880px] flex flex-col justify-between p-6 sm:p-10 lg:px-14 lg:py-8 overflow-hidden">
+      
+      <!-- Ambient Radiant Glow Aura directly behind Albert -->
+      <div class="hero-glow-backlight pointer-events-none"></div>
+
+      <!-- High-Fashion Typographic Backdrop (Outline + Solid as seen in inspiration video) -->
+      <div class="hero-backdrop-name pointer-events-none select-none" aria-hidden="true">
+        <span class="hero-outline-word">ALBERT</span>
+        <span class="hero-solid-word">VILLASOR</span>
+      </div>
+
+      <!-- Grounded Centered Large Portrait Stage (Rises up from bottom border) -->
+      <div class="hero-stage-portrait pointer-events-none hidden lg:flex">
+        <img 
+          src="images/albert-hero-suit.png" 
+          alt="Albert S. Villasor" 
+          class="hero-large-image"
+        />
+      </div>
+
+      <!-- ==========================================
+           TOP NAVIGATION BAR (Inside Hero Canvas)
+           ========================================== -->
+      <header id="main-header" class="relative z-30 flex items-center justify-between w-full hero-header-anim">
+        
+        <!-- Brand Identity (Left) -->
+        <a href="#home" class="flex items-center group ml-2 sm:ml-4 lg:ml-8 transition-all duration-300" aria-label="Albert S. Villasor - Home">
+          <!-- Monogram Badge with Ambient Glow -->
+          <div class="relative flex items-center justify-center">
+            <div class="absolute -inset-1.5 rounded-2xl bg-gradient-to-r from-purple-600 to-cyan-500 opacity-45 blur-md group-hover:opacity-80 transition-opacity duration-300"></div>
+            <div class="relative w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-slate-900/90 border border-slate-700/80 dark:border-white/20 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300 backdrop-blur-xl">
+              <span class="font-mono font-black text-sm sm:text-base tracking-wider bg-gradient-to-tr from-purple-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent">AV</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links (Center Capsule Island: Home, About, Skills, Projects, Services, Contact) -->
+        <nav class="hidden md:flex nav-capsule-island">
+          <a href="#home" class="nav-link nav-capsule-link nav-active">
+            <span>Home</span>
+          </a>
+          <a href="#about" class="nav-link nav-capsule-link">
+            <span>About</span>
+          </a>
+          <a href="#skills" class="nav-link nav-capsule-link">
+            <span>Skills</span>
+          </a>
+          <a href="#projects" class="nav-link nav-capsule-link">
+            <span>Projects</span>
+          </a>
+          <a href="#services" class="nav-link nav-capsule-link">
+            <span>Services</span>
+          </a>
+          <a href="#contact" class="nav-link nav-capsule-link">
+            <span>Contact</span>
+          </a>
+        </nav>
+
+        <!-- Right Header Actions (Theme Toggle & Get In Touch Capsule) -->
+        <div class="flex items-center gap-3">
+          <!-- Theme Toggle -->
+          <button id="theme-toggle" class="p-2.5 rounded-full bg-white/80 dark:bg-slate-900/80 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white border border-slate-200/90 dark:border-white/10 backdrop-blur-xl transition-all shadow-sm hover:scale-105 active:scale-95" aria-label="Toggle Theme">
+            <i data-lucide="sun" class="theme-icon-dark w-4 h-4 hidden text-amber-500"></i>
+            <i data-lucide="moon" class="theme-icon-light w-4 h-4 text-purple-300"></i>
+          </button>
+
+          <!-- Get In Touch Premium Capsule Button -->
+          <a href="#contact" class="hidden sm:inline-flex items-center gap-3 pl-5 pr-2 py-2 rounded-full font-bold text-xs tracking-wide transition-all duration-300 group relative z-10 get-in-touch-btn">
+            <span class="relative z-10 font-bold">Get in touch</span>
+            <span class="relative z-10 w-7 h-7 rounded-full bg-purple-600 text-white flex items-center justify-center group-hover:rotate-45 group-hover:bg-purple-500 transition-all duration-300 shadow-md shadow-purple-600/40">
+              <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </span>
+          </a>
+
+          <!-- Mobile Menu Button -->
+          <button id="mobile-menu-btn" class="p-2.5 rounded-xl bg-white/80 dark:bg-slate-900/80 text-slate-800 dark:text-white border border-slate-200/90 dark:border-white/10 md:hidden backdrop-blur-xl" aria-label="Open Mobile Menu">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+      </header>
+
+      <!-- ==========================================
+           MAIN HERO CONTENT: Left Text, Center Large Portrait, Right Statement
+           ========================================== -->
+      <div class="relative z-20 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center my-auto py-10 lg:py-6">
+        
+        <!-- LEFT: Large editorial headline & Professional Introduction -->
+        <div class="lg:col-span-5 xl:col-span-5 text-left space-y-3 pointer-events-auto">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-mono font-semibold hero-anim-badge">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Available for OJT / Internship (2026)</span>
+          </div>
+          <div class="hero-anim-title">
+            
+            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-[4.2rem] xl:text-[5.2rem] font-extrabold text-slate-900 dark:text-white tracking-tight leading-[0.98] font-display mt-1">
+              Front-End<br />
+              Developer
+            </h1>
+            <p class="text-base sm:text-lg font-bold bg-gradient-to-r from-purple-500 via-indigo-400 to-cyan-400 bg-clip-text text-transparent pt-1">
+              &amp; UI/UX Designer
+            </p>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal max-w-sm pt-1 italic hero-anim-quote">
+            &ldquo;Turning creative ideas into beautiful, functional digital experiences.&rdquo;
+          </p>
+          <div class="pt-3 flex items-center gap-3 hero-anim-actions">
+            <button class="open-resume-btn px-5 py-2.5 rounded-full bg-slate-900/5 hover:bg-slate-900/10 text-slate-900 border border-slate-300/80 dark:bg-white/10 dark:hover:bg-white/20 dark:text-white dark:border-white/20 text-xs font-semibold backdrop-blur-md transition-all flex items-center gap-2 shadow-sm hover:scale-105 active:scale-95">
+              <i data-lucide="file-text" class="w-3.5 h-3.5 text-purple-600 dark:text-purple-300"></i>
+              <span>View Resume</span>
+            </button>
+            <a href="#projects" class="px-5 py-2.5 rounded-full bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold shadow-lg shadow-purple-600/30 transition-all flex items-center gap-2 hover:scale-105 active:scale-95">
+              <span>Explore My Work</span>
+              <i data-lucide="arrow-down" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- MOBILE & TABLET PORTRAIT STAGE (Clean, centered, and completely unobstructed on mobile) -->
+        <div class="lg:hidden flex justify-center items-center my-3 sm:my-6 relative z-20 pointer-events-none">
+          <div class="relative flex items-center justify-center max-w-[280px] sm:max-w-[340px]">
+            <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-purple-600/35 via-indigo-500/25 to-cyan-400/30 blur-2xl scale-110"></div>
+            <img 
+              src="images/albert-hero-suit.png" 
+              alt="Albert S. Villasor" 
+              class="relative z-10 w-auto max-h-[300px] sm:max-h-[380px] object-contain drop-shadow-[0_12px_28px_rgba(0,0,0,0.55)]"
+            />
+          </div>
+        </div>
+
+        <!-- CENTER PASSAGE: Reserved for the prominent silhouette of Albert (Desktop only) -->
+        <div class="hidden lg:block lg:col-span-2 xl:col-span-2 pointer-events-none min-h-[220px]"></div>
+
+        <!-- RIGHT: "Great design should feel invisible." (Directly beside Albert's shoulder) -->
+        <div class="lg:col-span-5 xl:col-span-5 text-left space-y-3 pointer-events-auto lg:pl-12 xl:pl-16 hero-anim-statement">
+          <h2 class="text-2xl sm:text-3xl lg:text-[2.2rem] xl:text-[2.6rem] font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight font-display">
+            Every Pixel Has a Purpose.
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-white/75 leading-relaxed font-normal max-w-sm">
+            Combine creativity and technology to transform ideas into intuitive, visually engaging, and user-friendly.
+          </p>
+          
+        </div>
+
+      </div>
+
+      <!-- ==========================================
+           BOTTOM ROW: The 4 Numbered Capability Columns (#01 to #04)
+           ========================================== -->
+      <div class="relative z-30 pt-6 pb-2 border-t border-slate-200 dark:border-white/15 grid grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+        
+        <!-- #01 UI/UX Design -->
+        <div class="hero-anim-pillar-1">
+          <span class="text-xs font-mono font-bold text-purple-600 dark:text-purple-400 block mb-1">#01</span>
+          <span class="text-sm font-bold text-slate-900 dark:text-white block">UI/UX Design</span>
+          <span class="text-xs text-slate-500 dark:text-white/60 block mt-0.5">Figma &amp; Prototyping</span>
+        </div>
+
+        <!-- #02 Front-End Dev -->
+        <div class="hero-anim-pillar-2">
+          <span class="text-xs font-mono font-bold text-cyan-600 dark:text-cyan-400 block mb-1">#02</span>
+          <span class="text-sm font-bold text-slate-900 dark:text-white block">Front-End Dev</span>
+          <span class="text-xs text-slate-500 dark:text-white/60 block mt-0.5">HTML, CSS, Modern JS</span>
+        </div>
+
+        <!-- #03 Mobile Engineering -->
+        <div class="hero-anim-pillar-3">
+          <span class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 block mb-1">#03</span>
+          <span class="text-sm font-bold text-slate-900 dark:text-white block">Mobile Apps</span>
+          <span class="text-xs text-slate-500 dark:text-white/60 block mt-0.5">Flutter &amp; Dart Engine</span>
+        </div>
+
+        <!-- #04 Design Systems -->
+        <div class="hero-anim-pillar-4">
+          <span class="text-xs font-mono font-bold text-amber-600 dark:text-amber-400 block mb-1">#04</span>
+          <span class="text-sm font-bold text-slate-900 dark:text-white block">Design Systems</span>
+          <span class="text-xs text-slate-500 dark:text-white/60 block mt-0.5">Tokens &amp; Architecture</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Mobile Drawer Menu Overlay -->
+    <div id="mobile-menu" class="hidden fixed inset-0 top-0 bg-slate-950/95 backdrop-blur-2xl z-50 p-6 flex flex-col justify-between">
+      <div class="flex items-center justify-between pb-6 border-b border-slate-800">
+        <span class="font-display font-bold text-xl text-white">Albert S. Villasor</span>
+        <button id="close-mobile-menu" class="p-2 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors" aria-label="Close mobile menu">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+      <div class="space-y-4 py-8">
+        <a href="#home" class="mobile-nav-link block text-lg font-semibold text-slate-200 hover:text-purple-400 py-2 border-b border-slate-800/60">Home</a>
+        <a href="#about" class="mobile-nav-link block text-lg font-semibold text-slate-200 hover:text-purple-400 py-2 border-b border-slate-800/60">About Me</a>
+        <a href="#skills" class="mobile-nav-link block text-lg font-semibold text-slate-200 hover:text-purple-400 py-2 border-b border-slate-800/60">Technical Skills</a>
+        <a href="#projects" class="mobile-nav-link block text-lg font-semibold text-slate-200 hover:text-purple-400 py-2 border-b border-slate-800/60">Featured Projects</a>
+        <a href="#services" class="mobile-nav-link block text-lg font-semibold text-slate-200 hover:text-purple-400 py-2 border-b border-slate-800/60">Services</a>
+        <a href="#education" class="mobile-nav-link block text-lg font-semibold text-slate-200 hover:text-purple-400 py-2 border-b border-slate-800/60">Education & Honors</a>
+        <a href="#contact" class="mobile-nav-link block text-lg font-semibold text-slate-200 hover:text-purple-400 py-2">Contact & Inquiries</a>
+      </div>
+      <div class="space-y-3 pt-6 border-t border-slate-800">
+        <button class="open-resume-btn w-full py-3 rounded-xl bg-slate-800 text-white font-semibold text-sm flex items-center justify-center gap-2">
+          <i data-lucide="file-text" class="w-4 h-4 text-purple-400"></i>
+          <span>View Curriculum Vitae (CV)</span>
+        </button>
+        <a href="#contact" class="mobile-nav-link w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-cyan-500 text-white font-semibold text-sm flex items-center justify-center gap-2">
+          <span>Get In Touch</span>
+          <i data-lucide="send" class="w-4 h-4"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- ==========================================================================
+       ABOUT ME & CREATIVE PHILOSOPHY
+       ========================================================================== -->
+  <section id="about" class="relative z-10 py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <span class="px-3.5 py-1 rounded-full text-xs font-mono font-semibold text-purple-700 dark:text-primary-400 bg-purple-500/10 border border-purple-500/20 uppercase tracking-widest">
+          GET TO KNOW ME
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+          Driven by Creativity. Defined by Innovation.
+        </h2>
+        
+      </div>
+
+      <!-- Narrative & Background (Focused Full-Width Layout) -->
+      <div class="max-w-4xl mx-auto space-y-8 mb-16">
+        
+        <div class="text-slate-600 dark:text-slate-300 space-y-5 leading-relaxed text-base sm:text-lg">
+          <p>
+            I am an aspiring <strong class="text-purple-600 dark:text-primary-300 font-semibold">Front-End Developer</strong> and <strong class="text-cyan-600 dark:text-cyan-300 font-semibold">UI/UX Designer</strong> passionate about creating modern, visually engaging, and user-friendly digital experiences. Currently pursuing a Bachelor of Science in Information Technology at <strong class="text-slate-900 dark:text-white font-semibold">Cebu Eastern College (CEC)</strong>, I'm continuously developing my skills in web development, interface design, and emerging technologies.
+          </p>
+          <p>
+            My interest in design comes from understanding how colors, typography, layouts, and interactions influence the way people experience digital products. I enjoy transforming creative ideas into thoughtful designs and interactive prototypes using <strong class="text-slate-900 dark:text-white font-semibold">Figma</strong>.
+          </p>
+          <p> Beyond design, I enjoy bringing interfaces to life through clean and semantic <strong class="text-slate-900 dark:text-white font-semibold">HTML5, CSS3, and JavaScript</strong>, while exploring technologies such as <strong class="text-slate-900 dark:text-white font-semibold">Flutter and Dart</strong> for mobile application development and <strong class="text-slate-900 dark:text-white font-semibold">Python and Django</strong> for web development. Through academic and personal projects, I continue to strengthen my technical abilities, creativity, and problem-solving skills.
+          </p>
+        </div>
+
+        <!-- Dual Superpower Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+          
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-purple-500/30 glass-panel shadow-md dark:shadow-none hover:border-purple-500/50 transition-all">
+            <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center mb-4">
+              <svg class="w-6 h-6" viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 28.5C19 23.2533 23.2533 19 28.5 19C33.7467 19 38 23.2533 38 28.5C38 33.7467 33.7467 38 28.5 38C23.2533 38 19 33.7467 19 28.5Z" fill="#1ABCFE"/>
+                <path d="M0 47.5C0 42.2533 4.25329 38 9.5 38H19V47.5C19 52.7467 14.7467 57 9.5 57C4.25329 57 0 52.7467 0 47.5Z" fill="#0ACF83"/>
+                <path d="M19 0V19H28.5C33.7467 19 38 14.7467 38 9.5C38 4.25329 33.7467 0 28.5 0H19Z" fill="#FF7262"/>
+                <path d="M0 9.5C0 14.7467 4.25329 19 9.5 19H19V0H9.5C4.25329 0 0 4.25329 0 9.5Z" fill="#F24E1E"/>
+                <path d="M0 28.5C0 33.7467 4.25329 38 9.5 38H19V19H9.5C4.25329 19 0 23.2533 0 28.5Z" fill="#A259FF"/>
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">The UI/UX Designer</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+              Wireframing, user flows, design systems, accessibility contrast, micro-interactions, and high-fidelity clickable Figma prototypes.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-cyan-500/30 glass-panel shadow-md dark:shadow-none hover:border-cyan-500/50 transition-all">
+            <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center mb-4">
+              <i data-lucide="code-2" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">The Front-End Developer</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+              Clean semantic code, responsive mobile-first architecture, component styling, Flutter mobile interfaces, and REST API integration.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       TECHNICAL SKILLS & TOOLS MATRIX
+       ========================================================================== -->
+  <section id="skills" class="relative z-10 py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center min-h-[520px]">
+        
+        <!-- Left Column: Skills & Experience Content Matching 2nd Photo Style -->
+        <div class="lg:col-span-6 space-y-4">
+          
+          <span class="px-3.5 py-1 rounded-full text-xs font-mono font-semibold text-cyan-700 dark:text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 uppercase tracking-widest inline-block mb-1">
+            Expertise &amp; Tech Stack
+          </span>
+
+          <!-- Main Title in Electric Cyan (with crisp deep cyan in light mode) -->
+          <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black text-cyan-600 dark:text-[#08fdd8] tracking-tight leading-tight dark:drop-shadow-[0_0_25px_rgba(8,253,216,0.35)]">
+            Skills &amp; Experience
+          </h2>
+
+          <!-- Editorial Paragraphs Matching 2nd Photo -->
+          <div class="space-y-4 text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-relaxed pl-4 border-l-2 border-cyan-500/40 dark:border-[#08fdd8]/30">
+            <p>
+              My primary areas of interest are <strong class="text-slate-900 dark:text-white font-semibold">Front-End Development</strong> and <strong class="text-slate-900 dark:text-white font-semibold">UI/UX design</strong>, where I combine creativity and technical skills to build user-friendly digital experiences.
+            </p>
+            <p>
+              I enjoy developing clean, responsive, and interactive web interfaces using <strong class="text-cyan-700 dark:text-[#08fdd8]">HTML</strong>, <strong class="text-cyan-700 dark:text-[#08fdd8]">CSS</strong>, and <strong class="text-cyan-700 dark:text-[#08fdd8]">JavaScript</strong>. I focus on creating visually appealing layouts, smooth interactions, and accessible user experiences.
+            </p>
+            <p>
+              Beyond web development, I explore <strong class="text-cyan-700 dark:text-[#08fdd8]">Flutter</strong>, and <strong class="text-cyan-700 dark:text-[#08fdd8]">Dart</strong> for cross-platform mobile applications, <strong class="text-cyan-700 dark:text-[#08fdd8]">Python</strong> and <strong class="text-cyan-700 dark:text-[#08fdd8]">Django</strong> for web solutions, and <strong class="text-cyan-700 dark:text-[#08fdd8]">Java</strong> and <strong class="text-cyan-700 dark:text-[#08fdd8]">C++</strong> to strengthen my programming and problem-solving skills..
+            </p>
+            <p>
+              I also use <strong class="text-cyan-700 dark:text-[#08fdd8]">Figma</strong> to create wireframes, prototypes, and user-interface designs. Through academic and personal projects, I continuously improve my technical abilities and creative approach to development. 
+            </p>
+          </div>
+
+          <!-- 7 Core Skills Tag Strip -->
+          <div class="pt-4 flex flex-wrap items-center gap-2">
+            <span class="px-3.5 py-1.5 rounded-xl bg-white dark:bg-cyan-500/10 border border-slate-200 dark:border-cyan-500/30 text-cyan-700 dark:text-[#08fdd8] font-mono text-xs font-bold tracking-wide shadow-sm hover:scale-105 transition-transform">HTML</span>
+            <span class="px-3.5 py-1.5 rounded-xl bg-white dark:bg-cyan-500/10 border border-slate-200 dark:border-cyan-500/30 text-cyan-700 dark:text-[#08fdd8] font-mono text-xs font-bold tracking-wide shadow-sm hover:scale-105 transition-transform">CSS</span>
+            <span class="px-3.5 py-1.5 rounded-xl bg-white dark:bg-cyan-500/10 border border-slate-200 dark:border-cyan-500/30 text-cyan-700 dark:text-[#08fdd8] font-mono text-xs font-bold tracking-wide shadow-sm hover:scale-105 transition-transform">JavaScript</span>
+            <span class="px-3.5 py-1.5 rounded-xl bg-white dark:bg-cyan-500/10 border border-slate-200 dark:border-cyan-500/30 text-cyan-700 dark:text-[#08fdd8] font-mono text-xs font-bold tracking-wide shadow-sm hover:scale-105 transition-transform">Java</span>
+            <span class="px-3.5 py-1.5 rounded-xl bg-white dark:bg-cyan-500/10 border border-slate-200 dark:border-cyan-500/30 text-cyan-700 dark:text-[#08fdd8] font-mono text-xs font-bold tracking-wide shadow-sm hover:scale-105 transition-transform">C++</span>
+            <span class="px-3.5 py-1.5 rounded-xl bg-white dark:bg-cyan-500/10 border border-slate-200 dark:border-cyan-500/30 text-cyan-700 dark:text-[#08fdd8] font-mono text-xs font-bold tracking-wide shadow-sm hover:scale-105 transition-transform">Flutter</span>
+            <span class="px-3.5 py-1.5 rounded-xl bg-white dark:bg-cyan-500/10 border border-slate-200 dark:border-cyan-500/30 text-cyan-700 dark:text-[#08fdd8] font-mono text-xs font-bold tracking-wide shadow-sm hover:scale-105 transition-transform">Figma</span>
+          </div>
+
+        </div>
+
+        <!-- Right Column: 3D Interactive Rotating Tag Sphere -->
+        <div class="lg:col-span-6 flex items-center justify-center relative">
+          <div id="tag-sphere" class="relative w-full max-w-[480px] sm:max-w-[520px] h-[450px] sm:h-[500px] flex items-center justify-center select-none overflow-visible">
+            <!-- 3D Tag Sphere Canvas & Elements rendered by initTagSphere() in main.js -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       FEATURED PROJECTS SHOWCASE
+       ========================================================================== -->
+  <section id="projects" class="relative z-10 py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div class="space-y-3">
+          <span class="px-3.5 py-1 rounded-full text-xs font-mono font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 uppercase tracking-widest">
+            Portfolio Showcase
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+            Featured Projects & Case Studies
+          </h2>
+          <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base max-w-xl">
+            Selected works demonstrating user-centered product design in Figma, front-end architecture, and mobile engineering.
+          </p>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+          <button class="filter-btn active-filter px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white" data-filter="all">
+            All Works
+          </button>
+          <button class="filter-btn px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white" data-filter="ui-ux">
+            UI/UX Prototypes
+          </button>
+          <button class="filter-btn px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white" data-filter="web">
+            Web Applications
+          </button>
+          <button class="filter-btn px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white" data-filter="mobile">
+            Mobile Apps (Flutter)
+          </button>
+          <button class="filter-btn px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white" data-filter="game">
+            Game &amp; 3D (Roblox)
+          </button>
+        </div>
+      </div>
+
+      <!-- Dynamic Projects Bento Grid (Populated via projects-data.js) -->
+      <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
+        <!-- Rendered by main.js in Photo 2 Bento Style -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SERVICES & CORE CAPABILITIES
+       ========================================================================== -->
+  <section id="services" class="relative z-10 py-24 bg-slate-100/70 dark:bg-slate-950/60 border-t border-slate-200 dark:border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <span class="px-3.5 py-1 rounded-full text-xs font-mono font-semibold text-cyan-700 dark:text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 uppercase tracking-widest">
+          What I Bring to the Table
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+          Services &amp; Core Capabilities
+        </h2>
+        <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">
+          Comprehensive development and design services tailored to build beautiful, functional, and performant digital experiences.
+        </p>
+      </div>
+
+      <!-- 4 Core Capabilities Grid (Moved from Diagram to Services) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+        
+        <!-- Pillar 1: UI/UX Design -->
+        <div class="service-card p-6 sm:p-7 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-purple-500/25 shadow-lg shadow-slate-200/50 dark:shadow-none hover:border-purple-400/60 transition-all duration-300 group flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-13 h-13 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-purple-500/20 transition-all shadow-inner">
+                <i data-lucide="palette" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-300 border border-purple-500/20 font-semibold tracking-wider uppercase">Wireframe &amp; UX</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-300 transition-colors">
+              UI/UX Design
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+              Human-centered interfaces, user flows, and high-fidelity interactive prototypes designed to delight users and convert.
+            </p>
+            <ul class="space-y-2.5 text-xs text-slate-700 dark:text-slate-300 font-medium">
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-purple-500 shrink-0"></i>
+                <span>Figma &amp; Prototyping</span>
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-purple-500 shrink-0"></i>
+                <span>Wireframing &amp; Layouts</span>
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-purple-500 shrink-0"></i>
+                <span>Design Systems &amp; Tokens</span>
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-purple-500 shrink-0"></i>
+                <span>Mobile App UX (iOS &amp; Android)</span>
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-purple-500 shrink-0"></i>
+                <span>User Journey Mapping</span>
+              </li>
+            </ul>
+          </div>
+          <div class="mt-8 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+            <span class="text-[11px] font-mono text-purple-600 dark:text-purple-300 font-semibold">SolarWarden • Exmouth View Hotel</span>
+          </div>
+        </div>
+
+        <!-- Pillar 2: Front-End Web -->
+        <div class="service-card p-6 sm:p-7 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-cyan-500/25 shadow-lg shadow-slate-200/50 dark:shadow-none hover:border-cyan-400/60 transition-all duration-300 group flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-13 h-13 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-cyan-500/20 transition-all shadow-inner">
+                <i data-lucide="layout" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-300 border border-cyan-500/20 font-semibold tracking-wider uppercase">Web Architecture</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors">
+              Front-End Web
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+              Responsive layouts, semantic markup, and modern JavaScript web interactions built with clean, maintainable code.
+            </p>
+            <ul class="space-y-2.5 text-xs text-slate-700 dark:text-slate-300 font-medium">
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-500 shrink-0"></i>
+                <span>HTML5 &amp; Semantic Markup</span>
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-500 shrink-0"></i>
+                <span>CSS3 (Flexbox, Grid, Animations)</span>
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-500 shrink-0"></i>
+                <span>JavaScript (ES6+ Modern Syntax)</span>
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-500 shrink-0"></i>
+                <span>Tailwind CSS &amp; Utility-First</span>
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-500 shrink-0"></i>
+                <span>Responsive Web Design (RWD)</span>
+              </li>
+            </ul>
+          </div>
+          <div class="mt-8 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+            <span class="text-[11px] font-mono text-cyan-600 dark:text-cyan-300 font-semibold">FreeCodeCamp Certified</span>
+          </div>
+        </div>
+
+        <!-- Pillar 3: Mobile Apps (Flutter) -->
+        <div class="service-card p-6 sm:p-7 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-emerald-500/25 shadow-lg shadow-slate-200/50 dark:shadow-none hover:border-emerald-400/60 transition-all duration-300 group flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-13 h-13 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-500/20 transition-all shadow-inner">
+                <i data-lucide="smartphone" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border border-emerald-500/20 font-semibold tracking-wider uppercase">Cross-Platform</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-300 transition-colors">
+              Mobile Apps (Flutter)
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+              Cross-platform mobile applications with expressive widgets, responsive layouts, hardware sensors, and audio features.
+            </p>
+            <ul class="space-y-2.5 text-xs text-slate-700 dark:text-slate-300 font-medium">
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i>
+                <span>Flutter Framework</span>
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i>
+                <span>Dart Programming Language</span>
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i>
+                <span>flutter_map &amp; GPS Telemetry</span>
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i>
+                <span>AudioPlayers &amp; Media UI</span>
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i>
+                <span>State Management &amp; Local Storage</span>
+              </li>
+            </ul>
+          </div>
+          <div class="mt-8 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+            <span class="text-[11px] font-mono text-emerald-600 dark:text-emerald-300 font-semibold">SafeDrive • SoundFlow</span>
+          </div>
+        </div>
+
+        <!-- Pillar 4: Backend & Tools -->
+        <div class="service-card p-6 sm:p-7 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-amber-500/25 shadow-lg shadow-slate-200/50 dark:shadow-none hover:border-amber-400/60 transition-all duration-300 group flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-13 h-13 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-amber-500/20 transition-all shadow-inner">
+                <i data-lucide="database" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-300 border border-amber-500/20 font-semibold tracking-wider uppercase">Systems &amp; Cloud</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-300 transition-colors">
+              Backend &amp; Tools
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+              Server-side fundamentals, version control, database design, and modern developer workflows for end-to-end delivery.
+            </p>
+            <ul class="space-y-2.5 text-xs text-slate-700 dark:text-slate-300 font-medium">
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-amber-500 shrink-0"></i>
+                <span>Java Object-Oriented Programming (OOP)</span>
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-amber-500 shrink-0"></i>
+                <span>C++ Systems &amp; Data Structures</span>
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-amber-500 shrink-0"></i>
+                <span>Python &amp; Django Framework</span>
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-amber-500 shrink-0"></i>
+                <span>SQLite &amp; Database Modeling</span>
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-amber-500 shrink-0"></i>
+                <span>Git, GitHub &amp; Developer Tools</span>
+              </li>
+            </ul>
+          </div>
+          <div class="mt-8 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+            <span class="text-[11px] font-mono text-amber-600 dark:text-amber-300 font-semibold">Fashion Pulse Platform</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- ==========================================================================
+       EDUCATION, ACHIEVEMENTS & CREDENTIALS
+       ========================================================================== -->
+  <section id="education" class="relative z-10 py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <span class="px-3.5 py-1 rounded-full text-xs font-mono font-semibold text-amber-700 dark:text-amber-400 bg-amber-500/10 border border-amber-500/20 uppercase tracking-widest">
+          Academic & Honors
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+          Education, Honors & Timeline
+        </h2>
+        <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">
+          Demonstrated dedication to academic excellence, continuous learning, and industry immersion.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        
+        <!-- Left: Education Milestones Timeline -->
+        <div class="lg:col-span-7 space-y-8">
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+            <i data-lucide="graduation-cap" class="w-6 h-6 text-purple-600 dark:text-primary-400"></i>
+            <span>Educational Milestones</span>
+          </h3>
+
+          <div class="relative pl-8 border-l-2 border-slate-200 dark:border-slate-800 space-y-8">
+            
+            <!-- Tertiary Education -->
+            <div class="relative">
+              <div class="absolute -left-[41px] top-1.5 w-5 h-5 rounded-full bg-white dark:bg-slate-900 border-4 border-primary-500"></div>
+              <span class="text-xs font-mono font-bold text-purple-600 dark:text-primary-400 uppercase tracking-wider">2023 — Present • Ongoing</span>
+              <h4 class="text-lg font-bold text-slate-900 dark:text-white mt-1">Bachelor of Science in Information Technology (BSIT)</h4>
+              <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">Cebu Eastern College (CEC)</p>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                Focused coursework on Front-End Web Development, UI/UX Layout and Prototyping, Mobile Programming, Database Management, and Software Engineering methodologies.
+              </p>
+              <div class="mt-3 flex items-center gap-2">
+                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30">
+                  🏆 Dean's Lister (2023 - 2024)
+                </span>
+              </div>
+            </div>
+
+            <!-- Senior High School -->
+            <div class="relative">
+              <div class="absolute -left-[41px] top-1.5 w-5 h-5 rounded-full bg-white dark:bg-slate-900 border-4 border-cyan-500"></div>
+              <span class="text-xs font-mono font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">2021 — 2023</span>
+              <h4 class="text-lg font-bold text-slate-900 dark:text-white mt-1">Senior High School — STEM Strand</h4>
+              <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">Don Vicente Rama Memorial National High School</p>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                Science, Technology, Engineering, and Mathematics (STEM). Developed strong analytical reasoning, quantitative modeling, and computer fundamentals.
+              </p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">
+                  🎖️ Academic Excellence Award with High Honors
+                </span>
+                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/15 text-purple-700 dark:text-purple-400 border border-purple-500/30">
+                  🏅 Work Immersion Award (2023)
+                </span>
+              </div>
+            </div>
+
+            <!-- Junior High School -->
+            <div class="relative">
+              <div class="absolute -left-[41px] top-1.5 w-5 h-5 rounded-full bg-white dark:bg-slate-900 border-4 border-slate-400 dark:border-slate-600"></div>
+              <span class="text-xs font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">2017 — 2021</span>
+              <h4 class="text-base font-bold text-slate-900 dark:text-white mt-1">Junior High School</h4>
+              <p class="text-sm text-slate-600 dark:text-slate-400">Don Vicente Rama Memorial National High School</p>
+            </div>
+
+            <!-- Elementary School -->
+            <div class="relative">
+              <div class="absolute -left-[41px] top-1.5 w-5 h-5 rounded-full bg-white dark:bg-slate-900 border-4 border-slate-300 dark:border-slate-700"></div>
+              <span class="text-xs font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">2008 — 2017</span>
+              <h4 class="text-base font-bold text-slate-900 dark:text-white mt-1">Primary Education</h4>
+              <p class="text-sm text-slate-500 dark:text-slate-400">Don Vicente Rama Memorial National Elementary School</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: Awards, Certificates & Resume Preview -->
+        <div class="lg:col-span-5 space-y-6">
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+            <i data-lucide="award" class="w-6 h-6 text-amber-600 dark:text-amber-400"></i>
+            <span>Honors & Certifications</span>
+          </h3>
+
+          <!-- Credentials List -->
+          <div class="space-y-4">
+            
+            <div class="p-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-amber-500/30 flex items-start gap-4 shadow-sm">
+              <div class="p-3 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex-shrink-0">
+                <i data-lucide="trophy" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-base font-bold text-slate-900 dark:text-white">Dean's Lister (2023 - 2024)</h4>
+                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed font-medium">
+                  Cebu Eastern College — Awarded for exceptional semester GPA ranking in Bachelor of Science in Information Technology.
+                </p>
+              </div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-emerald-500/30 flex items-start gap-4 shadow-sm">
+              <div class="p-3 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex-shrink-0">
+                <i data-lucide="medal" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-base font-bold text-slate-900 dark:text-white">Academic Excellence Award with High Honors</h4>
+                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed font-medium">
+                  Senior High School STEM (2021 - 2023) — Graduated with top academic honors for outstanding performance across all subjects.
+                </p>
+              </div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-cyan-500/30 flex items-start gap-4 shadow-sm">
+              <div class="p-3 rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex-shrink-0">
+                <i data-lucide="check-circle" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-base font-bold text-slate-900 dark:text-white">FreeCodeCamp Responsive Web Design</h4>
+                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed font-medium">
+                  Legacy Responsive Web Design Certificate of Completion — 300 hours of coursework in HTML5, CSS3, Flexbox, CSS Grid, and responsive layout patterns.
+                </p>
+              </div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-purple-500/30 flex items-start gap-4 shadow-sm">
+              <div class="p-3 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex-shrink-0">
+                <i data-lucide="briefcase" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-base font-bold text-slate-900 dark:text-white">Work Immersion Award (2023)</h4>
+                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed font-medium">
+                  Recognized for exemplary professional aptitude, adaptability, and high performance during senior high work immersion.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Language Proficiency -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-3 shadow-sm">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Language Proficiency</span>
+            <div class="grid grid-cols-3 gap-2 text-center">
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50">
+                <span class="block text-sm font-bold text-slate-900 dark:text-white">English</span>
+                <span class="block text-[11px] text-slate-500 dark:text-slate-400 font-medium">Professional</span>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50">
+                <span class="block text-sm font-bold text-slate-900 dark:text-white">Cebuano</span>
+                <span class="block text-[11px] text-slate-500 dark:text-slate-400 font-medium">Native</span>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50">
+                <span class="block text-sm font-bold text-slate-900 dark:text-white">Tagalog</span>
+                <span class="block text-[11px] text-slate-500 dark:text-slate-400 font-medium">Fluent</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       OJT READY BANNER & VALUE PROPOSITION
+       ========================================================================== -->
+  <section class="relative z-10 py-16 bg-gradient-to-r from-purple-100 via-white to-cyan-100 dark:from-purple-950/40 dark:via-slate-900 dark:to-cyan-950/40 border-y border-purple-200 dark:border-purple-500/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="p-8 sm:p-12 rounded-3xl bg-white/95 dark:bg-slate-900/80 border border-purple-200 dark:border-purple-500/30 glass-panel shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8">
+        
+        <div class="space-y-4 max-w-2xl text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-400 text-xs font-semibold">
+            <span>🚀 Looking for an OJT / Junior Frontend & UI/UX Developer?</span>
+          </div>
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            Ready to Deliver Immediate Value to Your Team
+          </h3>
+          <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
+            I bring a self-starting mindset, proven design prototyping skills in Figma, clean responsive coding habits, and genuine eagerness to contribute to real-world products. Available for on-site (Cebu City), hybrid, or remote arrangements.
+          </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-4 flex-shrink-0">
+          <button class="open-resume-btn px-6 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 font-bold text-sm shadow-xl transition-colors flex items-center gap-2 whitespace-nowrap">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>Download Full Resume</span>
+          </button>
+          
+          <a href="#contact" class="px-6 py-3.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm shadow-xl transition-colors flex items-center gap-2 whitespace-nowrap">
+            <i data-lucide="mail" class="w-4 h-4"></i>
+            <span>Contact Me Directly</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       CONTACT & GET IN TOUCH
+       ========================================================================== -->
+  <section id="contact" class="relative z-10 py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <span class="px-3.5 py-1 rounded-full text-xs font-mono font-semibold text-cyan-700 dark:text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 uppercase tracking-widest">
+          Let's Connect
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+          Get in Touch for Opportunities
+        </h2>
+        <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">
+          Whether you have an OJT opening, a freelance project, or simply want to talk design and code, my inbox is always open.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        
+        <!-- Left: Direct Contact Information -->
+        <div class="lg:col-span-5 space-y-6">
+          
+          <!-- Compelling OJT Invitation Card -->
+          <div class="p-6 rounded-2xl bg-gradient-to-br from-purple-900/40 via-slate-900 to-cyan-950/40 border border-purple-500/30 shadow-xl space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">Actively Seeking OJT (2026)</span>
+            </div>
+            <h4 class="text-lg font-bold text-white">Let's Build Something Exceptional Together</h4>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              I am eager to contribute my front-end development, responsive web design, and UI/UX prototyping skills to your engineering and design team. Available for On-the-Job Training (OJT), junior roles, and creative web projects.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-5 shadow-md">
+            
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Direct Connect</h3>
+            
+            <!-- Email -->
+            <div class="flex items-start gap-4">
+              <div class="p-3 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 flex-shrink-0">
+                <i data-lucide="mail" class="w-5 h-5"></i>
+              </div>
+              <div class="flex-1">
+                <span class="block text-xs text-slate-500 dark:text-slate-400 font-medium">Direct Email</span>
+                <a href="mailto:albertvillasor6@gmail.com" class="font-medium text-slate-900 dark:text-white hover:text-purple-600 dark:hover:text-primary-300 transition-colors text-sm break-all">
+                  albertvillasor6@gmail.com
+                </a>
+                <button class="copy-email-btn mt-1 text-xs text-purple-600 dark:text-primary-400 hover:text-purple-700 dark:hover:text-primary-300 flex items-center gap-1 font-semibold">
+                  <i data-lucide="copy" class="w-3 h-3"></i>
+                  <span>Copy to clipboard</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="flex items-start gap-4">
+              <div class="p-3 rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 flex-shrink-0">
+                <i data-lucide="phone" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <span class="block text-xs text-slate-500 dark:text-slate-400 font-medium">Phone / Mobile</span>
+                <a href="tel:09368462663" class="font-medium text-slate-900 dark:text-white hover:text-cyan-600 dark:hover:text-cyan-300 transition-colors text-sm">
+                  +63 936 846 2663 / 09368462663
+                </a>
+              </div>
+            </div>
+
+            <!-- Location -->
+            <div class="flex items-start gap-4">
+              <div class="p-3 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex-shrink-0">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <span class="block text-xs text-slate-500 dark:text-slate-400 font-medium">Location</span>
+                <span class="font-medium text-slate-900 dark:text-white text-sm">
+                  Back Rubber World, Basak San Nicolas, Cebu City, Philippines
+                </span>
+              </div>
+            </div>
+
+            <!-- GitHub & LinkedIn Profiles -->
+            <div class="pt-5 border-t border-slate-200 dark:border-slate-800 space-y-3">
+              <span class="block text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold">Professional Networks</span>
+              <div class="grid grid-cols-2 gap-3">
+                <a href="https://github.com/AlbertVills" target="_blank" rel="noopener noreferrer" class="p-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 dark:bg-slate-800/80 dark:hover:bg-slate-700 text-xs dark:text-slate-200 flex items-center justify-center gap-2.5 transition-colors font-semibold border border-slate-200/80 dark:border-slate-700/60 shadow-sm text-center group">
+                  <svg class="w-4 h-4 text-purple-500 shrink-0 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                  </svg>
+                  <span>GitHub</span>
+                </a>
+                <a href="https://www.linkedin.com/in/albert-villasor-171783451/" target="_blank" rel="noopener noreferrer" class="p-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 dark:bg-slate-800/80 dark:hover:bg-slate-700 text-xs dark:text-slate-200 flex items-center justify-center gap-2.5 transition-colors font-semibold border border-slate-200/80 dark:border-slate-700/60 shadow-sm text-center group">
+                  <svg class="w-4 h-4 text-cyan-500 shrink-0 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.27a1.64 1.64 0 1 0 0 3.28 1.64 1.64 0 0 0 0-3.28z" />
+                  </svg>
+                  <span>LinkedIn</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Right: Interactive Message Form -->
+        <div class="lg:col-span-7">
+          <div class="p-8 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 glass-panel shadow-md">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Send a Direct Message</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-6 font-medium">Fill out the quick form below and I will respond to your email as soon as possible.</p>
+
+            <form id="contact-form" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="contact-name" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Your Full Name</label>
+                  <input 
+                    type="text" 
+                    id="contact-name" 
+                    required 
+                    placeholder="e.g. John Doe / Recruiter Name" 
+                    class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 text-sm focus:outline-none focus:border-purple-500 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label for="contact-email" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Your Email Address</label>
+                  <input 
+                    type="email" 
+                    id="contact-email" 
+                    required 
+                    placeholder="name@company.com" 
+                    class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 text-sm focus:outline-none focus:border-purple-500 transition-colors"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label for="contact-subject" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Subject / Opportunity Type</label>
+                <input 
+                  type="text" 
+                  id="contact-subject" 
+                  required 
+                  placeholder="e.g. OJT Front-End Opportunity / Interview Invitation" 
+                  class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 text-sm focus:outline-none focus:border-purple-500 transition-colors"
+                />
+              </div>
+
+              <div>
+                <label for="contact-message" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Message / Requirements</label>
+                <textarea 
+                  id="contact-message" 
+                  required 
+                  rows="4" 
+                  placeholder="Hi Albert, we would love to connect with you regarding an OJT opening..." 
+                  class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 text-sm focus:outline-none focus:border-purple-500 transition-colors resize-none"
+                ></textarea>
+              </div>
+
+              <button 
+                type="submit" 
+                class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 hover:opacity-95 text-white font-semibold text-sm shadow-xl shadow-purple-600/25 transition-all flex items-center justify-center gap-2"
+              >
+                <span>Send Message</span>
+                <i data-lucide="send" class="w-4 h-4"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="relative z-10 py-12 border-t border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-950 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 to-cyan-400 p-[1.5px]">
+          <div class="w-full h-full bg-slate-900 dark:bg-slate-950 rounded-[7px] flex items-center justify-center font-display font-bold text-white text-xs">
+            AV
+          </div>
+        </div>
+        <span class="text-sm font-semibold text-slate-800 dark:text-slate-300">
+          Albert S. Villasor
+        </span>
+        <span class="text-slate-400 dark:text-slate-600">•</span>
+        <span class="text-xs text-slate-500">
+          Front-End Developer & UI/UX Designer
+        </span>
+      </div>
+
+      <div class="flex items-center gap-6 text-xs text-slate-600 dark:text-slate-400 font-medium">
+        <a href="#about" class="hover:text-purple-600 dark:hover:text-white transition-colors">About</a>
+        <a href="#skills" class="hover:text-purple-600 dark:hover:text-white transition-colors">Skills</a>
+        <a href="#projects" class="hover:text-purple-600 dark:hover:text-white transition-colors">Projects</a>
+        <a href="#services" class="hover:text-purple-600 dark:hover:text-white transition-colors">Services</a>
+        <a href="#education" class="hover:text-purple-600 dark:hover:text-white transition-colors">Education</a>
+        <a href="#contact" class="hover:text-purple-600 dark:hover:text-white transition-colors">Contact</a>
+      </div>
+
+      <div class="text-xs text-slate-500">
+        © 2026 Albert S. Villasor. All rights reserved.
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       MODALS CONTAINER
+       ========================================================================== -->
+
+  <!-- 1. Project Details Modal -->
+  <div id="project-modal" class="hidden fixed inset-0 z-50 bg-slate-950/60 dark:bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div id="project-modal-content" class="w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl relative">
+      <!-- Populated dynamically via main.js -->
+    </div>
+  </div>
+
+  <!-- 2. Interactive Resume / CV Modal -->
+  <div id="resume-modal" class="hidden fixed inset-0 z-50 bg-slate-950/70 dark:bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div class="w-full max-w-4xl max-h-[92vh] overflow-y-auto rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col">
+      
+      <!-- Modal Top Bar -->
+      <div class="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 no-print">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+            <i data-lucide="file-text" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Albert S. Villasor — Curriculum Vitae</h3>
+            <span class="text-xs text-slate-500 dark:text-slate-400">Front-End Developer & UI/UX Designer</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button id="print-resume-btn" class="px-3.5 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm">
+            <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+            <span>Print / Save PDF</span>
+          </button>
+          
+          <button id="close-resume-btn" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Resume Printable Content -->
+      <div id="resume-print-content" class="p-6 md:p-10 space-y-8 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">
+        
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
+          <div>
+            <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white">ALBERT S. VILLASOR</h1>
+            <p class="text-sm font-semibold text-purple-600 dark:text-primary-400 tracking-wider uppercase mt-1">Information Technology Student • Front-End Developer & UI/UX Designer</p>
+            <div class="mt-3 flex flex-wrap gap-4 text-xs text-slate-600 dark:text-slate-400 font-medium">
+              <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i> Back Rubber World, Basak San Nicolas, Cebu City</span>
+              <span class="flex items-center gap-1"><i data-lucide="phone" class="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400"></i> 09368462663</span>
+              <span class="flex items-center gap-1"><i data-lucide="mail" class="w-3.5 h-3.5 text-purple-600 dark:text-purple-400"></i> albertvillasor6@gmail.com</span>
+            </div>
+          </div>
+          <div class="w-24 h-28 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 flex-shrink-0 shadow-md">
+            <img src="images/resume-headshot.jpg" alt="Albert S. Villasor" class="w-full h-full object-cover object-center" />
+          </div>
+        </div>
+
+        <!-- Career Objective -->
+        <div>
+          <h4 class="text-xs font-mono font-bold uppercase tracking-widest text-purple-700 dark:text-primary-400 mb-2">Career Objectives</h4>
+          <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-slate-800/40 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+            Motivated Information Technology student seeking an On-the-Job Training (OJT) opportunity focused on Frontend Development and UI/UX Design. Eager to apply my knowledge of web development, website layout, prototyping, and user interface design while enhancing my technical and creative skills. Dedicated to creating user-friendly, visually appealing, and functional websites while gaining valuable industry experience and contributing to the organization's goals.
+          </p>
+        </div>
+
+        <!-- Grid 2-col -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          
+          <!-- Left Col -->
+          <div class="space-y-6">
+            
+            <div>
+              <h4 class="text-xs font-mono font-bold uppercase tracking-widest text-purple-700 dark:text-primary-400 mb-3">Technical Skills</h4>
+              <ul class="space-y-1.5 text-xs text-slate-700 dark:text-slate-300 font-medium">
+                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span> <strong>UI/UX Design:</strong> Figma, Wireframing, High-Fidelity Prototyping, Design Systems</li>
+                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span> <strong>Front-End Web:</strong> HTML5, CSS3, JavaScript (ES6+), Tailwind CSS, Responsive Design</li>
+                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span> <strong>Mobile Apps:</strong> Flutter, Dart, flutter_map, AudioPlayers, REST APIs</li>
+                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span> <strong>Backend & Data:</strong> Python, Django Framework, SQLite</li>
+                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span> <strong>Tools & Workflow:</strong> Git & GitHub, VS Code, Android Studio</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="text-xs font-mono font-bold uppercase tracking-widest text-purple-700 dark:text-primary-400 mb-3">Academic Achievements</h4>
+              <div class="space-y-2 text-xs">
+                <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/60 shadow-sm">
+                  <span class="font-bold text-slate-900 dark:text-white block">Dean's Lister (2023 - 2024)</span>
+                  <span class="text-slate-600 dark:text-slate-400">Cebu Eastern College (CEC)</span>
+                </div>
+                <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/60 shadow-sm">
+                  <span class="font-bold text-slate-900 dark:text-white block">Academic Excellence Award with High Honors (2021 - 2023)</span>
+                  <span class="text-slate-600 dark:text-slate-400">Senior High School (STEM)</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="text-xs font-mono font-bold uppercase tracking-widest text-purple-700 dark:text-primary-400 mb-3">Certificates & Awards</h4>
+              <div class="space-y-2 text-xs">
+                <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/60 shadow-sm">
+                  <span class="font-bold text-slate-900 dark:text-white block">FreeCodeCamp Legacy Responsive Web Design</span>
+                  <span class="text-slate-600 dark:text-slate-400">Certificate of Completion (300 hours)</span>
+                </div>
+                <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/60 shadow-sm">
+                  <span class="font-bold text-slate-900 dark:text-white block">Work Immersion Award (2023)</span>
+                  <span class="text-slate-600 dark:text-slate-400">Exemplary industry readiness commendment</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="text-xs font-mono font-bold uppercase tracking-widest text-purple-700 dark:text-primary-400 mb-2">Languages</h4>
+              <div class="flex gap-4 text-xs text-slate-700 dark:text-slate-300 font-medium">
+                <span>• English (Professional)</span>
+                <span>• Cebuano (Native)</span>
+                <span>• Tagalog (Fluent)</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Col -->
+          <div class="space-y-6">
+            
+            <div>
+              <h4 class="text-xs font-mono font-bold uppercase tracking-widest text-purple-700 dark:text-primary-400 mb-3">Education History</h4>
+              <div class="space-y-4 text-xs">
+                
+                <div class="border-l-2 border-primary-500 pl-3">
+                  <span class="font-mono text-purple-600 dark:text-primary-400 font-semibold block text-[11px]">2023 — Present</span>
+                  <span class="font-bold text-slate-900 dark:text-white text-sm block">Tertiary Education</span>
+                  <span class="text-slate-700 dark:text-slate-300 font-medium block">Cebu Eastern College (CEC)</span>
+                  <span class="text-slate-600 dark:text-slate-400 block mt-0.5">• Bachelor of Science in Information Technology</span>
+                </div>
+
+                <div class="border-l-2 border-cyan-500 pl-3">
+                  <span class="font-mono text-cyan-600 dark:text-cyan-400 font-semibold block text-[11px]">2017 — 2023</span>
+                  <span class="font-bold text-slate-900 dark:text-white text-sm block">Secondary Education</span>
+                  <span class="text-slate-700 dark:text-slate-300 font-medium block">Don Vicente Rama Memorial National High School</span>
+                  <span class="text-slate-600 dark:text-slate-400 block mt-0.5">• Senior High School (2021 - 2023) — STEM Strand (High Honors)</span>
+                  <span class="text-slate-600 dark:text-slate-400 block">• Junior High School (2017 - 2021)</span>
+                </div>
+
+                <div class="border-l-2 border-slate-400 dark:border-slate-600 pl-3">
+                  <span class="font-mono text-slate-500 dark:text-slate-400 font-semibold block text-[11px]">2008 — 2017</span>
+                  <span class="font-bold text-slate-900 dark:text-white text-sm block">Primary Education</span>
+                  <span class="text-slate-600 dark:text-slate-400 font-medium block">Don Vicente Rama Memorial National Elementary School</span>
+                </div>
+
+              </div>
+            </div>
+
+            <div>
+              <h4 class="text-xs font-mono font-bold uppercase tracking-widest text-purple-700 dark:text-primary-400 mb-3">Key Projects Portfolio</h4>
+              <div class="space-y-3 text-xs">
+                <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/60 shadow-sm">
+                  <span class="font-bold text-slate-900 dark:text-white block">SolarWarden (Capstone Project)</span>
+                  <span class="text-slate-600 dark:text-slate-400 block">Lead UI/UX Designer & Prototyper in Figma (18+ screens IoT solar monitor)</span>
+                </div>
+                <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/60 shadow-sm">
+                  <span class="font-bold text-slate-900 dark:text-white block">Fashion Pulse Web Platform</span>
+                  <span class="text-slate-600 dark:text-slate-400 block">Front-End Developer & UI Designer (Django, JavaScript, HTML5/CSS3)</span>
+                </div>
+                <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/60 shadow-sm">
+                  <span class="font-bold text-slate-900 dark:text-white block">SafeDrive Driver Companion</span>
+                  <span class="text-slate-600 dark:text-slate-400 block">Mobile Developer in Flutter (Geolocator, flutter_map, Emergency SOS)</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Floating Back to Top Button -->
+  <button id="back-to-top" class="hidden fixed bottom-6 right-6 z-40 p-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-primary-500/40 text-purple-600 dark:text-primary-400 shadow-xl hover:scale-110 active:scale-95 transition-all" aria-label="Back to Top">
+    <i data-lucide="arrow-up" class="w-5 h-5"></i>
+  </button>
+
+  <!-- Application Scripts -->
+  <script src="js/projects-data.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
