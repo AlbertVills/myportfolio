@@ -1181,10 +1181,10 @@ function initContactForm() {
   const form = document.getElementById("contact-form");
   if (!form) return;
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const submitBtn = form.querySelector('button[type="submit"]');
-    const originalText = submitBtn.innerHTML;
+    const originalHTML = submitBtn.innerHTML;
 
     // Loading state
     submitBtn.disabled = true;
@@ -1196,13 +1196,38 @@ function initContactForm() {
       <span>Sending Message...</span>
     `;
 
-    // Simulated network delay
-    setTimeout(() => {
-      showToast("Message sent successfully! Thank you for reaching out, I'll reply promptly.");
-      form.reset();
+    try {
+      const formData = new FormData(form);
+      const object = Object.fromEntries(formData);
+      const json = JSON.stringify(object);
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: json
+      });
+
+      const result = await response.json();
+
+      if (response.status === 200 && result.success) {
+        showToast("Message sent successfully! Thank you for reaching out, I'll reply promptly.");
+        form.reset();
+      } else {
+        showToast(result.message || "Failed to send message. Please try again or email me directly.");
+      }
+    } catch (error) {
+      console.error("Web3Forms submission error:", error);
+      showToast("Network error. Please try again or email me directly.");
+    } finally {
       submitBtn.disabled = false;
-      submitBtn.innerHTML = originalText;
-    }, 1200);
+      submitBtn.innerHTML = originalHTML;
+      if (window.lucide && typeof lucide.createIcons === "function") {
+        lucide.createIcons();
+      }
+    }
   });
 }
 
