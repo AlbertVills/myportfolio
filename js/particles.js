@@ -49,7 +49,7 @@
         "139, 92, 246", // Electric Purple
         "59, 130, 246",  // Vibrant Blue
         "6, 182, 212",   // Bright Cyan
-        "16, 185, 129"   // Vivid Emerald
+        "0, 210, 255"    // Electric Neon Blue
       ];
       return darkColors[index % darkColors.length];
     } else {
@@ -57,7 +57,7 @@
         "124, 58, 237", // Deep purple
         "37, 99, 235",  // Deep blue
         "14, 116, 144", // Deep cyan
-        "5, 150, 105"   // Deep emerald
+        "2, 132, 199"   // Deep sky blue
       ];
       return lightColors[index % lightColors.length];
     }

@@ -270,41 +270,373 @@ function initHeroEntranceAndParallax() {
 }
 
 /* ==========================================================================
-   3. Projects Showcase & Filtering
+   3. Projects Showcase & Interactive Paper Stack Experience
    ========================================================================== */
 function initProjects() {
-  const container = document.getElementById("projects-grid");
-  const filterBtns = document.querySelectorAll(".filter-btn");
+  const stackContainer = document.getElementById("projects-paper-stack");
 
-  if (!container || !window.projectsData) return;
+  if (!window.projectsData || !stackContainer) return;
 
-  renderProjects("all");
+  // Initialize Interactive Paper Stack
+  initPaperStack(stackContainer);
+}
 
-  filterBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      filterBtns.forEach((b) => b.classList.remove("active-filter"));
-      btn.classList.add("active-filter");
-      const category = btn.getAttribute("data-filter");
-      renderProjects(category);
-    });
-  });
+  // --------------------------------------------------------------------------
+  // Additive Interactive Paper Stack ("Pile of Papers" with Undo)
+  // --------------------------------------------------------------------------
+  function initPaperStack(container) {
+    const projects = window.projectsData;
+    const total = projects.length;
 
-  function renderProjects(category) {
-    const isBento = category === "all";
-    const filtered = isBento
-      ? window.projectsData
-      : window.projectsData.filter((p) => p.category === category);
+    // Defined organic paper tilt angles for physical realism
+    const rotations = [-1.8, 2.2, -1.4, 1.9, -2.4, 1.3];
 
-    container.innerHTML = "";
+    // State:
+    // stackLevel:
+    // 0 = Initial Starter ("Tap to See Projects")
+    // 1 to total = Projects 1 to 6 placed on stack (active top is stackLevel - 1)
+    // total + 1 = Completion Card placed on top
+    let stackLevel = 0;
+    let isAnimating = false;
 
-    filtered.forEach((project, idx) => {
-      const card = createProjectCard(project, idx, isBento);
-      container.appendChild(card);
-    });
+    // Render Initial Starter Cover
+    function renderStarterCover() {
+      container.innerHTML = "";
+      stackLevel = 0;
 
-    if (window.lucide) {
-      window.lucide.createIcons();
+      // Background decorative paper edge
+      const paperDecor = document.createElement("div");
+      paperDecor.className = "paper-card bg-slate-200/90 dark:bg-slate-900/60 border border-slate-300 dark:border-white/5 pointer-events-none";
+      paperDecor.style.transform = "translate3d(0, 16px, -20px) scale(0.96) rotate(2deg)";
+      paperDecor.style.opacity = "0.5";
+      paperDecor.style.zIndex = "5";
+
+      const starterCard = document.createElement("div");
+      starterCard.className = "paper-card is-active-top cursor-pointer p-6 sm:p-8 md:p-10 bg-white/95 dark:bg-[#0c1222]/95 border-2 border-slate-300 dark:border-cyan-500/30 backdrop-blur-xl flex items-center justify-center paper-landing shadow-2xl";
+      starterCard.style.setProperty("--paper-rot", "0deg");
+      starterCard.style.zIndex = "10";
+      starterCard.id = "starter-paper-card";
+
+      starterCard.innerHTML = `
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-600/15 via-transparent to-cyan-500/15 pointer-events-none rounded-3xl"></div>
+        
+        <div class="relative z-10 text-center">
+          <button id="tap-start-btn" class="tap-cta-pulse inline-flex items-center gap-3.5 px-8 py-4 sm:px-10 sm:py-5 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-[#00d2ff] text-white font-bold text-base sm:text-lg shadow-2xl hover:scale-105 active:scale-95 transition-transform duration-300 group">
+            <span class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center group-hover:rotate-12 transition-transform">
+              <i data-lucide="layers" class="w-4 h-4 text-white"></i>
+            </span>
+            <span class="tracking-wide">Tap to See Projects</span>
+            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+          </button>
+        </div>
+      `;
+
+      container.appendChild(paperDecor);
+      container.appendChild(starterCard);
+
+      starterCard.addEventListener("click", () => {
+        advanceStack();
+      });
+
+      if (window.lucide) window.lucide.createIcons();
     }
+
+    // Advance stack (adds the next paper strictly ABOVE the previous paper like a real pile)
+    function advanceStack() {
+      if (isAnimating) return;
+      if (stackLevel > total) return;
+      isAnimating = true;
+
+      // 1. Mark current top card as covered underneath
+      const prevTop = container.querySelector(".paper-card.is-active-top");
+      if (prevTop) {
+        prevTop.classList.remove("is-active-top");
+        prevTop.classList.add("is-covered");
+      }
+
+      stackLevel++;
+
+      // 2. Append new top paper
+      let newCard;
+      if (stackLevel <= total) {
+        const projectIdx = stackLevel - 1;
+        newCard = createStackedPaper(projects[projectIdx], projectIdx, true, true);
+      } else {
+        newCard = createCompletionPaper(true);
+      }
+
+      container.appendChild(newCard);
+      if (window.lucide) window.lucide.createIcons();
+
+      setTimeout(() => {
+        isAnimating = false;
+      }, 420);
+    }
+
+    // Undo stack (lifts the top paper off the pile with an animation, revealing the covered card underneath)
+    function undoStack() {
+      if (isAnimating) return;
+      if (stackLevel === 0) return;
+      isAnimating = true;
+
+      const topCard = container.querySelector(".paper-card.is-active-top");
+      if (topCard) {
+        topCard.classList.remove("paper-landing");
+        topCard.classList.add("paper-lifting-off");
+      }
+
+      setTimeout(() => {
+        if (topCard && topCard.parentNode) {
+          topCard.parentNode.removeChild(topCard);
+        }
+        stackLevel--;
+
+        // Uncover the previous card so it becomes active top again
+        const remainingCards = container.querySelectorAll(".paper-card:not(.pointer-events-none)");
+        if (remainingCards.length > 0) {
+          const newTop = remainingCards[remainingCards.length - 1];
+          if (newTop) {
+            newTop.classList.remove("is-covered");
+            newTop.classList.add("is-active-top");
+          }
+        }
+        isAnimating = false;
+      }, 360);
+    }
+
+    // Create a Stacked Project Paper Card
+    function createStackedPaper(project, idx, isTop, shouldAnimate) {
+      const card = document.createElement("div");
+      const rot = rotations[idx % rotations.length];
+      const zIndex = (idx + 1) * 10;
+
+      card.className = `paper-card bg-white/95 dark:bg-[#0c1222]/95 border-2 border-slate-300 dark:border-white/15 backdrop-blur-xl ${isTop ? "is-active-top" : "is-covered"} ${shouldAnimate ? "paper-landing" : ""}`;
+      card.style.zIndex = String(zIndex);
+      card.style.setProperty("--paper-rot", `${rot}deg`);
+      card.style.transform = `translate3d(0, 0, 0) rotate(${rot}deg)`;
+
+      const badgeStyle = project.category === "ui-ux" 
+        ? { bg: "bg-sky-500/10", text: "text-sky-700 dark:text-[#00d2ff]", border: "border-sky-400/30 dark:border-cyan-500/30", dot: "bg-sky-600 dark:bg-[#00d2ff]" }
+        : project.category === "web"
+        ? { bg: "bg-purple-500/10", text: "text-purple-700 dark:text-purple-300", border: "border-purple-400/30 dark:border-purple-500/30", dot: "bg-purple-600 dark:bg-purple-400" }
+        : project.category === "game"
+        ? { bg: "bg-rose-500/10", text: "text-rose-700 dark:text-rose-300", border: "border-rose-400/30 dark:border-rose-500/30", dot: "bg-rose-600 dark:bg-rose-400" }
+        : { bg: "bg-sky-500/10", text: "text-sky-700 dark:text-sky-300", border: "border-sky-400/30 dark:border-sky-500/30", dot: "bg-sky-600 dark:bg-sky-400" };
+
+      const tagsHtml = project.tags
+        .slice(0, 3)
+        .map(t => `<span class="px-2.5 py-1 text-[11px] rounded-lg bg-slate-100 text-slate-700 border border-slate-200/90 dark:bg-slate-950/80 dark:text-slate-300 dark:border-white/10 font-mono font-medium">${t}</span>`)
+        .join("");
+
+      const dotsHtml = projects.map((p, dIdx) => `
+        <span class="h-1.5 rounded-full transition-all duration-300 ${dIdx === idx ? 'w-5 bg-[#00d2ff]' : dIdx < idx ? 'w-2 bg-purple-500/80' : 'w-2 bg-slate-300 dark:bg-slate-700'}"></span>
+      `).join("");
+
+      const isLastProject = idx === total - 1;
+      const nextBtnLabel = isLastProject ? "Finish Deck" : "Next Project";
+
+      card.innerHTML = `
+        <!-- Cover Image with Gradient -->
+        <div class="relative w-full h-[210px] sm:h-[240px] overflow-hidden bg-slate-100 dark:bg-slate-950 flex-shrink-0">
+          <img 
+            src="${project.coverImage}" 
+            alt="${project.title}" 
+            class="w-full h-full object-cover object-center transition-transform duration-700 ease-out" 
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-white/90 via-white/20 to-transparent dark:from-[#0c1222] dark:via-[#0c1222]/40 dark:to-transparent"></div>
+
+          <!-- Top Overlay Badges -->
+          <div class="absolute top-4 inset-x-4 flex items-center justify-between z-10">
+            <span class="px-3 py-1 rounded-full text-xs font-mono font-semibold backdrop-blur-md border ${badgeStyle.border} ${badgeStyle.bg} ${badgeStyle.text} shadow-md inline-flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full ${badgeStyle.dot}"></span>
+              <span>${project.badge}</span>
+            </span>
+            
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-mono font-semibold rounded-full bg-white/90 dark:bg-slate-950/85 text-slate-800 dark:text-white backdrop-blur-md border border-slate-200 dark:border-white/20 shadow-md">
+                ${idx + 1} / ${total}
+              </span>
+            </div>
+          </div>
+
+          <!-- Role Tag -->
+          <div class="absolute bottom-3 left-4 z-10">
+            <span class="px-2.5 py-1 text-[11px] font-mono font-bold uppercase tracking-wider text-sky-700 dark:text-[#00d2ff] bg-white/95 dark:bg-slate-950/90 rounded-md border border-sky-400/40 dark:border-cyan-500/30 shadow-sm">
+              ${project.role}
+            </span>
+          </div>
+        </div>
+
+        <!-- Middle Info Body -->
+        <div class="p-5 sm:p-6 space-y-3 flex-grow flex flex-col justify-between">
+          <div class="space-y-1.5">
+            <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight leading-snug line-clamp-2">
+              ${project.title}
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
+              ${project.shortDesc}
+            </p>
+          </div>
+
+          <!-- Tech tags -->
+          <div class="flex flex-wrap items-center gap-1.5 pt-1">
+            ${tagsHtml}
+          </div>
+
+          <!-- Step Progress Dots -->
+          <div class="flex items-center justify-between pt-1 text-xs text-slate-500 dark:text-slate-400">
+            <div class="flex items-center gap-1.5">
+              ${dotsHtml}
+            </div>
+            <span class="font-mono text-[11px] text-sky-700 dark:text-cyan-400 font-semibold">Stack: ${idx + 1} of ${total}</span>
+          </div>
+        </div>
+
+        <!-- Bottom Actions (View Project, Next / Stack Above, Undo) -->
+        <div class="p-4 sm:p-5 pt-3 bg-slate-50/90 dark:bg-slate-950/70 border-t border-slate-200 dark:border-white/10 flex items-center gap-2 sm:gap-3">
+          <!-- Undo Button -->
+          <button class="btn-undo-paper px-3 sm:px-3.5 py-3 rounded-xl bg-white hover:bg-slate-100 dark:bg-slate-800/80 dark:hover:bg-slate-700 text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white border border-slate-300 dark:border-slate-700 hover:border-purple-400/60 font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:scale-[1.03] active:scale-95 transition-all shadow-sm" title="Undo / Lift top paper off">
+            <i data-lucide="undo-2" class="w-4 h-4 text-purple-600 dark:text-purple-400"></i>
+            <span class="hidden sm:inline">Undo</span>
+          </button>
+
+          <!-- View Project Button (Calls openProjectModal) -->
+          <button class="btn-view-card flex-1 py-3 px-3 sm:px-4 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-[#00d2ff] hover:from-purple-500 hover:to-cyan-400 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-lg shadow-purple-600/30 hover:scale-[1.02] active:scale-95 transition-all">
+            <i data-lucide="eye" class="w-4 h-4"></i>
+            <span>View Project</span>
+          </button>
+
+          <!-- Next Project / Cover Above Button -->
+          <button class="btn-next-paper flex-1 py-3 px-3 sm:px-4 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-slate-800/90 dark:hover:bg-slate-700 text-white border border-slate-900 dark:border-slate-700 hover:border-cyan-400/70 font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:scale-[1.02] active:scale-95 transition-all group shadow-sm">
+            <span>${nextBtnLabel}</span>
+            <i data-lucide="layers" class="w-4 h-4 text-cyan-400 group-hover:translate-x-0.5 transition-transform"></i>
+          </button>
+        </div>
+      `;
+
+      // Event Listeners for card actions
+      const btnView = card.querySelector(".btn-view-card");
+      const btnNext = card.querySelector(".btn-next-paper");
+      const btnUndo = card.querySelector(".btn-undo-paper");
+
+      if (btnView) {
+        btnView.addEventListener("click", (e) => {
+          e.stopPropagation();
+          openProjectModal(project);
+        });
+      }
+
+      if (btnNext) {
+        btnNext.addEventListener("click", (e) => {
+          e.stopPropagation();
+          advanceStack();
+        });
+      }
+
+      if (btnUndo) {
+        btnUndo.addEventListener("click", (e) => {
+          e.stopPropagation();
+          undoStack();
+        });
+      }
+
+      // Clicking anywhere on the card outside buttons also advances to next project
+      card.addEventListener("click", (e) => {
+        if (e.target.closest("button") || e.target.closest("a")) return;
+        advanceStack();
+      });
+
+      return card;
+    }
+
+    // Create Final Completion Paper ("You've Explored All Projects!")
+    function createCompletionPaper(shouldAnimate) {
+      const compCard = document.createElement("div");
+      compCard.className = `paper-card is-active-top p-6 sm:p-8 md:p-10 bg-white/95 dark:bg-[#0c1222]/95 border-2 border-slate-300 dark:border-cyan-500/40 backdrop-blur-xl flex flex-col justify-between shadow-2xl ${shouldAnimate ? "paper-landing" : ""}`;
+      compCard.style.zIndex = "80";
+      compCard.style.setProperty("--paper-rot", "0deg");
+      compCard.style.transform = "translate3d(0, 0, 0) rotate(0deg)";
+
+      compCard.innerHTML = `
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-600/15 via-transparent to-cyan-500/15 pointer-events-none rounded-3xl"></div>
+
+        <div class="relative z-10 flex items-center justify-between">
+          <span class="px-3.5 py-1 rounded-full text-xs font-mono font-semibold text-sky-700 dark:text-[#00d2ff] bg-sky-500/10 border border-sky-400/30 dark:border-cyan-400/30 uppercase tracking-widest inline-flex items-center gap-1.5 shadow-sm">
+            <i data-lucide="check-check" class="w-3.5 h-3.5"></i>
+            <span>All 6 Papers Stacked</span>
+          </span>
+        </div>
+
+        <div class="relative z-10 my-auto py-6 text-center space-y-6">
+          <div class="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-3xl bg-gradient-to-tr from-purple-600 via-indigo-600 to-[#00d2ff] p-0.5 shadow-2xl shadow-cyan-500/20">
+            <div class="w-full h-full bg-white dark:bg-[#0c1222] rounded-[22px] flex items-center justify-center shadow-inner">
+              <i data-lucide="sparkles" class="w-10 h-10 sm:w-12 sm:h-12 text-purple-600 dark:text-[#00d2ff] animate-pulse"></i>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <h3 class="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
+              You've Explored All Projects!
+            </h3>
+          </div>
+
+          <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <button id="btn-restart-stack" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-purple-600/30 hover:scale-105 active:scale-95 transition-all">
+              <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+              <span>Explore Again</span>
+            </button>
+
+            <button id="btn-undo-completion" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-white dark:border-slate-700 hover:border-purple-400/80 font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition-all shadow-sm">
+              <i data-lucide="undo-2" class="w-4 h-4 text-purple-600 dark:text-purple-400"></i>
+              <span>Undo</span>
+            </button>
+          </div>
+        </div>
+      `;
+
+      const btnRestart = compCard.querySelector("#btn-restart-stack");
+      if (btnRestart) {
+        btnRestart.addEventListener("click", () => {
+          renderStarterCover();
+        });
+      }
+
+      const btnUndoFinish = compCard.querySelector("#btn-undo-completion");
+      if (btnUndoFinish) {
+        btnUndoFinish.addEventListener("click", () => {
+          undoStack();
+        });
+      }
+
+      return compCard;
+    }
+
+    // Touch Swipe Gesture Support for Mobile
+    let touchStartX = 0;
+    let touchStartY = 0;
+    container.addEventListener("touchstart", (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    container.addEventListener("touchend", (e) => {
+      const diffX = e.changedTouches[0].screenX - touchStartX;
+      const diffY = e.changedTouches[0].screenY - touchStartY;
+
+      // Horizontal swipe threshold: 50px
+      if (Math.abs(diffX) > 50 && Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX < 0) {
+          // Swipe Left -> Next Project (Stack Above)
+          advanceStack();
+        } else {
+          // Swipe Right -> Undo (Lift Off Top Paper)
+          undoStack();
+        }
+      }
+    }, { passive: true });
+
+    // Initialize stack at starter cover
+    renderStarterCover();
   }
 
   function createProjectCard(project, index, isBento) {
@@ -447,7 +779,6 @@ function initProjects() {
 
     return card;
   }
-}
 
 /* ==========================================================================
    4. Project Details Modal with Tab Switching
@@ -1154,12 +1485,12 @@ function initTagSphere() {
         }
       } else {
         if (item.skill.isCore) {
-          item.el.style.color = depth > 0.35 ? "#08fdd8" : "#0ea5e9";
-          item.el.style.textShadow = depth > 0.35 ? "0 0 16px rgba(8, 253, 216, 0.65)" : "none";
+          item.el.style.color = depth > 0.35 ? "#00d2ff" : "#0ea5e9";
+          item.el.style.textShadow = depth > 0.35 ? "0 0 18px rgba(0, 210, 255, 0.75)" : "none";
           item.el.style.fontWeight = "800";
         } else {
           item.el.style.color = depth > 0.45 ? "#38bdf8" : "#64748b";
-          item.el.style.textShadow = "none";
+          item.el.style.textShadow = depth > 0.45 ? "0 0 10px rgba(56, 189, 248, 0.4)" : "none";
           item.el.style.fontWeight = "600";
         }
       }
